@@ -21,13 +21,16 @@
 
 #--------------------
 set -e
-
-UNAME_S=$(uname -s)
+# 作用：运行 uname -s 获取操作系统名称（例如 Linux、Darwin、CYGWIN_NT-10.0），并把结果存入变量 UNAME_S。
+UNAME_S=$(uname -s) 
+#作用：运行 uname -sm 获取操作系统名称与硬件架构（例如 Linux x86_64 或 Darwin x86_64），并把结果存入 UNAME_SM。
 UNAME_SM=$(uname -sm)
-echo "build on $UNAME_SM"
 
-echo "ANDROID_NDK=$ANDROID_NDK"
+echo "------------------- do-detect-env.sh -------------------" 
+echo "build on $UNAME_SM" # Linux x86_64
 
+
+echo "ANDROID_NDK=$ANDROID_NDK" 
 if [ -z "$ANDROID_NDK" ]; then
     echo "You must define ANDROID_NDK before starting."
     echo "They must point to your NDK directories."
@@ -42,6 +45,7 @@ export IJK_GCC_VER=4.9
 export IJK_GCC_64_VER=4.9
 export IJK_MAKE_TOOLCHAIN_FLAGS=
 export IJK_MAKE_FLAG=
+# get ndk release version
 export IJK_NDK_REL=$(grep -o '^r[0-9]*.*' $ANDROID_NDK/RELEASE.TXT 2>/dev/null | sed 's/[[:space:]]*//g' | cut -b2-)
 case "$IJK_NDK_REL" in
     10e*)
@@ -78,6 +82,7 @@ case "$IJK_NDK_REL" in
                 fi
             ;;
             *)
+                #如果是最新的 NDK r21（或 r19+）：请放弃这条旧命令。您应该直接使用 $NDK/toolchains/llvm/prebuilt/linux-x86_64/bin/ 下的 Clang 编译器。
                 echo "You need the NDKr10e or later"
                 exit 1
             ;;
@@ -97,3 +102,6 @@ case "$UNAME_S" in
         echo "Cygwin temp prefix=$IJK_WIN_TEMP/"
     ;;
 esac
+
+echo "do-detect-env.sh done. NDK r$IJK_NDK_REL, GCC $IJK_GCC_VER  , GCC64 $IJK_GCC_64_VER ,IJK_MAKE_TOOLCHAIN_FLAGS $IJK_MAKE_TOOLCHAIN_FLAGS ,IJK_MAKE_FLAG $IJK_MAKE_FLAG"
+echo "--------------------"

@@ -19,10 +19,11 @@
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
 
 LOCAL_PATH := $(call my-dir)
-
+$(info LOCAL_PATH: $(LOCAL_PATH))
 include $(CLEAR_VARS)
 # -mfloat-abi=soft is a workaround for FP register corruption on Exynos 4210
 # http://www.spinics.net/lists/arm-kernel/msg368417.html
+# 当当前构建 ABI 为 armeabi-v7a（即 ARMv7）时，向编译器追加 -mfloat-abi=soft 标志（这是对某些 SoC（如 Exynos 4210）上浮点寄存器问题的兼容性处理）。
 ifeq ($(TARGET_ARCH_ABI),armeabi-v7a)
 LOCAL_CFLAGS += -mfloat-abi=soft
 endif

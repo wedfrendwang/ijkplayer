@@ -23,8 +23,8 @@
 UNI_BUILD_ROOT=`pwd`
 FF_TARGET=$1
 FF_TARGET_EXTRA=$2
-set -e
-set +x
+set -e #作用：启用“碰到错误立即退出”模式；任何命令返回非零则脚本退出，帮助防止在错误状态下继续执行。
+set +x #作用：禁用 shell 的 xtrace（即关闭 -x），如果之前开启了 set -x 则此行将关闭命令跟踪输出；通常用于避免过多日志噪声。
 
 FF_ACT_ARCHS_32="armv5 armv7a x86"
 FF_ACT_ARCHS_64="armv5 armv7a arm64 x86 x86_64"
@@ -58,6 +58,7 @@ echo_nextstep_help() {
     echo "sh compile-ijk.sh "
 }
 
+echo "$FF_TARGET"
 #----------
 case "$FF_TARGET" in
     "")
@@ -81,7 +82,9 @@ case "$FF_TARGET" in
         echo_archs $FF_ACT_ARCHS_64
         for ARCH in $FF_ACT_ARCHS_64
         do
+            echo "---------------- Building ffmpeg for $ARCH start-----------------"
             sh tools/do-compile-ffmpeg.sh $ARCH $FF_TARGET_EXTRA
+            echo "-----------------Building ffmpeg for $ARCH end-----------------"
         done
         echo_nextstep_help
     ;;

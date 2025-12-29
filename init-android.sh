@@ -48,3 +48,6 @@ pull_fork "x86_64"
 ./init-config.sh
 ./init-android-libyuv.sh
 ./init-android-soundtouch.sh
+./init-android-openssl.sh
+./init-android-prof.sh
+
