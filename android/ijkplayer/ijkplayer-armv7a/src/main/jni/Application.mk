@@ -17,6 +17,8 @@
 # License along with ijkPlayer; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
 
+$(info Application.mk: TARGET_ARCH_ABI=$(TARGET_ARCH_ABI))
+
 APP_OPTIM := release
 APP_PLATFORM := android-9
 APP_ABI := armeabi-v7a
