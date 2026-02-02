@@ -9,6 +9,6 @@
 
 # 更新记录
 
-## 2026/1/4 (ijkplayer_r0.1)
+## 2026/1/4 (ijkplayer_r0)
 
 1. 该分支对应 [bilibili/ijkplayer tag=k0.8.8](https://github.com/bilibili/ijkplayer)能力
